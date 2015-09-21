@@ -11,9 +11,19 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    sort_param = params[:criteria]
+    @movies = Movie.all.order(sort_param)
+#   if sort_param == title
+#      title_header.hilite
+#    end
+#    if sort_param == release_date
+#      release_date_header.hilite
+#    end
   end
 
+#  def sort_by_name
+#    @movies = Movie.find(:all, :order => "title")
+#  end
   def new
     # default: render 'new' template
   end
