@@ -13,17 +13,15 @@ class MoviesController < ApplicationController
   def index
     sort_param = params[:criteria]
     @movies = Movie.all.order(sort_param)
-#   if sort_param == title
-#      title_header.hilite
-#    end
-#    if sort_param == release_date
-#      release_date_header.hilite
-#    end
+    @all_ratings = Movie.rat.uniq
+    @rat_check = params[:ratings]
+    if @rat_check.class != NilClass
+      puts "Hello" , @rat_check.class
+      @all_keys = @rat_check.keys
+      @movies = Movie.all.select { |m| @all_keys.include?m.rating}
+    end
   end
 
-#  def sort_by_name
-#    @movies = Movie.find(:all, :order => "title")
-#  end
   def new
     # default: render 'new' template
   end
