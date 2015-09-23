@@ -11,6 +11,15 @@ class MoviesController < ApplicationController
   end
 
   def index
+    params.each do |my_key,value|
+      session[my_key] = params[my_key]
+    end
+    @ses_keys = session.keys
+    @ses_keys.each do |key|
+     if params[key] == nil
+       params[key] = session[key]
+       end
+     end
     sort_param = params[:criteria]
     @movies = Movie.all.order(sort_param)
     @all_ratings = Movie.rat.uniq
@@ -18,7 +27,7 @@ class MoviesController < ApplicationController
     if @rat_check.class != NilClass
       puts "Hello" , @rat_check.class
       @all_keys = @rat_check.keys
-      @movies = Movie.all.select { |m| @all_keys.include?m.rating}
+      @movies = Movie.all.order(sort_param).select { |m| @all_keys.include?m.rating}
     end
   end
 
