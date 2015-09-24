@@ -21,6 +21,7 @@ class MoviesController < ApplicationController
        end
      end
     sort_param = params[:criteria]
+    puts @title_header
     @movies = Movie.all.order(sort_param)
     @all_ratings = Movie.rat.uniq
     @rat_check = params[:ratings]
